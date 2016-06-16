@@ -13,7 +13,7 @@ git clone $sshURL .
 git checkout $name
 virtual env
 source env/bin/activate
-pip3 install -r /var/www/gitwrapper/requirements.txt > /var/www/pipinstall.log
+pip3 install -r requirements.txt 
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 cp /var/www/local_settings.py project/
