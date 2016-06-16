@@ -11,7 +11,7 @@ echo `pwd`
 
 git clone $sshURL .
 git checkout $name
-virtual env
+virtualenv env
 source env/bin/activate
 pip3 install -r requirements.txt 
 DJANGO_SETTINGS_MODULE=project.settings.prod
