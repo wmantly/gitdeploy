@@ -16,8 +16,8 @@ source env/bin/activate
 pip3 install -r requirements.txt 
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
-cp /var/www/local_settings.py project/
-echo "BRANCH = /"$name/"" >> project/local_settings.py
+cp /var/www/local_settings.py project/settings/local_settings.py
+echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
 python3 manage.py loaddata /var/www/django.dump
 python3 manage.py collectstatic --noinput
