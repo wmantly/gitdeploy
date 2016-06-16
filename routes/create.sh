@@ -7,7 +7,7 @@ eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 mkdir /var/www/gitwrapper/$name
 cd /var/www/gitwrapper/$name
-echo pwd
+echo `pwd`
 
 git clone $sshURL .
 git checkout $name
