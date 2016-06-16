@@ -28,7 +28,7 @@ chmod 777 db.sqlite3
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
 echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
 echo "    Alias /static /var/www/gitwrapper/$name/staticfiles" >> /etc/apache2/sites-enabled/$name.conf
-echo "    WSGIDaemonProcess $name python-path=/var/www/gitwrapper/$name:/var/www/gitwrapper/$name/env/lib/python3.4/site-packages" >> /etc/apache2/sites-enabled/$name.conf
+echo "    WSGIDaemonProcess $name python-path=/var/www/gitwrapper/$name:/var/www/gitwrapper/$name/env/lib/python3.5/site-packages" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIProcessGroup $name" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIScriptAlias / /var/www/gitwrapper/$name/project/wsgi.py" >> /etc/apache2/sites-enabled/$name.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
