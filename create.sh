@@ -13,7 +13,7 @@ DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
-virtualenv env
+virtualenv ./env
 source env/bin/activate
 pip install -r requirements.txt 
 cp /var/www/local_settings.py project/settings/local_settings.py
