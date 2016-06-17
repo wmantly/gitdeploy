@@ -13,6 +13,9 @@ DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
+python3 manage.py migrate
+python3 manage.py loaddata "/var/www/django.dump"
+
 git checkout $name
 virtualenv env
 source env/bin/activate
@@ -21,7 +24,6 @@ pip install -r requirements.txt
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
-python3 manage.py loaddata "/var/www/django.dump"
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
 chmod 777 .
