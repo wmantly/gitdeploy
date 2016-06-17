@@ -11,19 +11,19 @@ var install_dir = '/var/www/gitwrapper/'
 var calls = {
 	create: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/create.sh '+name+' '+sshURL, function(err, stdout, stderr){
-			
+			console.log(err, stdout, stderr);
 			return res.json({ title: 'Express' });
 		});
 	},
 	update: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/update.sh '+name+' '+sshURL, function(err, stdout, stderr){
-			
+			console.log(err, stdout, stderr);
 			return res.json({ title: 'Express' });
 		});
 	},
 	delete: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/delete.sh '+name+' '+sshURL, function(err, stdout, stderr){
-			
+			console.log(err, stdout, stderr);
 			return res.json({ title: 'Express' });
 		});
 	}
