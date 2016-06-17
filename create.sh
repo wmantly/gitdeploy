@@ -7,6 +7,7 @@ eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 mkdir /var/www/gitwrapper/$name
 cd /var/www/gitwrapper/$name
+chmod 777 .
 echo `pwd`
 
 DJANGO_SETTINGS_MODULE=project.settings.prod
@@ -29,7 +30,6 @@ pip install -r requirements.txt
 
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
-chmod 777 .
 chmod 777 db.sqlite3
 
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
