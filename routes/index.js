@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var exec = require('child_process').exec;
 var fs = require('fs');
-var fs = fs.existsSync(dir)
 /* GET home page. */
 
 var install_dir = '/var/www/gitwrapper/'
