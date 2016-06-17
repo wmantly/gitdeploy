@@ -40,7 +40,6 @@ echo "    WSGIProcessGroup $name" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIScriptAlias / /var/www/gitwrapper/$name/project/wsgi.py" >> /etc/apache2/sites-enabled/$name.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
 
-
-service apache2 restart
+/usr/sbin/service apache2 restart
 
 exit 0

@@ -5,6 +5,6 @@ sshURL="$2"
 rm -rf /var/www/gitwrapper/$name
 rm /etc/apache2/sites-enabled/$name.conf
 
-service apache2 reload
+/usr/sbin/service apache2 restart
 
 exit 0

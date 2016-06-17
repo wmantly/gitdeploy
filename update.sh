@@ -19,6 +19,7 @@ python3 manage.py migrate
 
 chmod 777 .
 chmod 777 db.sqlite3
-service apache2 reload
+
+/usr/sbin/service apache2 restart
 
 exit 0
