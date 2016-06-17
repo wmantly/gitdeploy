@@ -43,4 +43,4 @@ echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
 
 service apache2 restart
 
-# copy and make data base
+exit 0

@@ -1,19 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var exec = require('child_process').exec;
+var fs = require('fs');
+var fs = fs.existsSync(dir)
 /* GET home page. */
 
 var install_dir = '/var/www/gitwrapper/'
-	
-// var shell = {
-// 	clone: function(name, sshURL, callback){
-// 		return exec('git clone '+ sshURL + ' '+ install_dir + name, function(err, stdout, stderr){
-// 			return callback(name, stdout);
-// 	},
-// 	setUpENV: function(){
 
-// 	}
-// };
 
 
 var calls = {
@@ -23,15 +16,14 @@ var calls = {
 		});
 	},
 	update: function(name, sshURL){
-		// git pull
-		// run migrations
-		// install req file
-		// reload apache
+		return exec('bash update.sh '+name+' '+sshURL, function(err, stdout, stderr){
+			return res.json({ title: 'Express' });
+		});
 	},
 	delete: function(name){
-		// delete dir
-		// remove apache file
-		// reload apache
+		return exec('bash delete.sh '+name+' '+sshURL, function(err, stdout, stderr){
+			return res.json({ title: 'Express' });
+		});
 	}
 
 };
@@ -43,6 +35,7 @@ router.all('/', function(req, res, next) {
 
 	var name = req.body.ref.replace('refs/heads/', '');
 	var sshURL = req.body.repository.ssh_url;
+	if(call === 'update' && !fs.existsSync('/var/www/gitwrapper/'+name)) call = 'create';
 
 	return calls[call](req, res, name, sshURL);
 });
