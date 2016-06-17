@@ -22,7 +22,7 @@ echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
 python manage.py createcachetable
 python3 manage.py migrate
-python3 manage.py loaddata "/var/www/django.json"
+python3 manage.py loaddata /var/www/django.json
 
 git checkout $name
 
