@@ -17,14 +17,9 @@ var install_dir = '/var/www/gitwrapper/'
 
 
 var calls = {
-	create: function(name, sshURL){
-		exec('git clone '+ sshURL + ' /var/www/gitwrapper/'+ name, function(err, stdout, stderr){
-			// set up virtual env
-			// install req file
-			// sync db
-			// run migrations
-			// write apache file
-			// reload apache
+	create: function(req, res, name, sshURL){
+		return exec('bash create.sh '+name+' '+sshURL, function(err, stdout, stderr){
+			return res.json({ title: 'Express' });
 		});
 	},
 	update: function(name, sshURL){
@@ -48,16 +43,8 @@ router.all('/', function(req, res, next) {
 
 	var name = req.body.ref.replace('refs/heads/', '');
 	var sshURL = req.body.repository.ssh_url;
-	exec('pwd', console.log);
-	console.log('call', call, 'event:', event, 'name:', name, 'sshURL:', sshURL)
-	// console.log("\n=================\n\n", req.body);
-/*    if(req.headers['x-github-event'] === 'push'){
-        if(req.body.ref === "refs/heads/master"){
-            console.log('time to update master!');
-            exec('/var/www/gitwrapperdeploy.sh', console.log, console.log);
-        }
-    }*/
-  res.json({ title: 'Express' });
+
+	return calls[call](req, res, name, sshURL);
 });
 
 module.exports = router;
