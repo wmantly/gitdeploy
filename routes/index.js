@@ -14,12 +14,12 @@ var calls = {
 			return res.json({ title: 'Express' });
 		});
 	},
-	update: function(name, sshURL){
+	update: function(req, res, name, sshURL){
 		return exec('bash update.sh '+name+' '+sshURL, function(err, stdout, stderr){
 			return res.json({ title: 'Express' });
 		});
 	},
-	delete: function(name){
+	delete: function(req, res, name, sshURL){
 		return exec('bash delete.sh '+name+' '+sshURL, function(err, stdout, stderr){
 			return res.json({ title: 'Express' });
 		});
