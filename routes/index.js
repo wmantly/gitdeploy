@@ -6,8 +6,8 @@ router.all('/', function(req, res, next) {
     console.log("some one is here");
     if(req.headers['x-github-event'] === 'push'){
 	console.log("got a push!");
-        if(req.body.ref === "refs/heads/master"){
-            console.log('time to update master!');
+        if(req.body.ref === "refs/heads/prod"){
+            console.log('time to update prod!');
             exec('/var/www/gitwrapperdeploy.sh', console.log, console.log);
         }
     }
