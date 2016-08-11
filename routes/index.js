@@ -14,4 +14,8 @@ router.all('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/dbdump', function(req, res, nex){
+	res.sendFile('/var/backups/db/djangodump.json');
+});
+
 module.exports = router;
