@@ -20,6 +20,8 @@ pip install -r requirements.txt
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
+git checkout prod
+
 python manage.py createcachetable
 python3 manage.py migrate
 python3 manage.py loaddata /var/www/django.json
