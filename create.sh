@@ -9,15 +9,17 @@ eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 
 mkdir /var/www/gitwrapper/$name
+chmod 777 /var/www/gitwrapper/$name
 cd /var/www/gitwrapper/$name
-chmod 777 .
+
+
 echo `pwd`
 echo '============='
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
-git checkout prod origin/prod
+git checkout prod
 git status
 echo "=================="
 
@@ -26,7 +28,7 @@ echo "=================="
 # change https urls to ssh
 perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
 git submodule sync
-
+echo "=================="
 ./scripts/setup.sh
 git stash
 cp /var/www/local_settings.py project/settings/local_settings.py
