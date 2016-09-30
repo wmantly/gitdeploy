@@ -26,7 +26,7 @@ echo "=================="
 
 
 # change https urls to ssh
-perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
+perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git\@github.com:/g' .gitmodules
 git submodule sync
 echo "=================="
 ./scripts/setup.sh
@@ -43,7 +43,7 @@ echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
 git checkout $name
 # change https urls to ssh
-perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
+perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git\@github.com:/g' .gitmodules
 git submodule sync
 ./scripts/setup.sh 
 git stash
