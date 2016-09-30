@@ -17,7 +17,7 @@ DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
-git checkout prod
+git checkout prod origin/prod
 git status
 echo "=================="
 
