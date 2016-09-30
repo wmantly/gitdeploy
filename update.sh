@@ -13,7 +13,7 @@ cd /var/www/gitwrapper/$name
 git stash
 git pull --force origin $name
 
-./scripts/setUp.sh
+./scripts/setup.sh
 
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate

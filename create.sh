@@ -17,7 +17,7 @@ export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
 
-./scripts/setUp.sh
+./scripts/setup.sh
 
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
@@ -31,7 +31,7 @@ git checkout prod
 
 git checkout $name
 
-./scripts/setUp.sh 
+./scripts/setup.sh 
 
 # python3 manage.py collectstatic --noinput
 ./manage.py migrate
