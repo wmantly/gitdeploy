@@ -3,6 +3,8 @@
 name="$1"
 sshURL="$2"
 
+nodePort=`./random_port.py`
+
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 mkdir /var/www/gitwrapper/$name
@@ -14,26 +16,29 @@ DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
-/usr/local/bin/virtualenv ./env
-source env/bin/activate
-pip install -r requirements.txt 
+
+./scripts/setUp.sh
+
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
+# set up project from prod, load database
 git checkout prod
 
-python manage.py createcachetable
-python3 manage.py migrate
-python3 manage.py loaddata /var/www/django.json
+./manage.py createcachetable
+./manage.py migrate
+./manage.py loaddata /var/www/django.json
 
 git checkout $name
 
-pip install -r requirements.txt 
+./scripts/setUp.sh 
 
-python3 manage.py collectstatic --noinput
-python3 manage.py migrate
+# python3 manage.py collectstatic --noinput
+./manage.py migrate
 chmod 777 db.sqlite3
 
+
+# set up apache vhost
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
 echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
 echo "    Alias /static /var/www/gitwrapper/$name/staticfiles" >> /etc/apache2/sites-enabled/$name.conf

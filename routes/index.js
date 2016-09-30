@@ -12,19 +12,19 @@ var calls = {
 	create: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/create.sh '+name+' '+sshURL, function(err, stdout, stderr){
 			console.log(err, stdout, stderr);
-			return res.json({ title: 'Express' });
+			return res.json({ title: stdout });
 		});
 	},
 	update: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/update.sh '+name+' '+sshURL, function(err, stdout, stderr){
 			console.log(err, stdout, stderr);
-			return res.json({ title: 'Express' });
+			return res.json({ title: stdout });
 		});
 	},
 	delete: function(req, res, name, sshURL){
 		return exec('bash /var/www/gitdeploy/delete.sh '+name+' '+sshURL, function(err, stdout, stderr){
 			console.log(err, stdout, stderr);
-			return res.json({ title: 'Express' });
+			return res.json({ title: stdout });
 		});
 	}
 
