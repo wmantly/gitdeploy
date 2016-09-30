@@ -7,6 +7,7 @@ nodePort=`./random_port.py`
 
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
+
 mkdir /var/www/gitwrapper/$name
 cd /var/www/gitwrapper/$name
 chmod 777 .
@@ -16,6 +17,10 @@ DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
+git checkout prod
+
+# change https urls to ssh
+perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
 
 ./scripts/setup.sh
 
@@ -23,16 +28,17 @@ cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
 # set up project from prod, load database
-git checkout prod
+
 
 ./manage.py createcachetable
 ./manage.py migrate
 ./manage.py loaddata /var/www/django.json
 
 git checkout $name
-
+# change https urls to ssh
+perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
 ./scripts/setup.sh 
-
+git stash
 # python3 manage.py collectstatic --noinput
 ./manage.py migrate
 chmod 777 db.sqlite3

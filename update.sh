@@ -13,7 +13,11 @@ cd /var/www/gitwrapper/$name
 git stash
 git pull --force origin $name
 
+perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
+git submodule sync
+
 ./scripts/setup.sh
+git stash
 
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
