@@ -62,7 +62,7 @@ echo "    WSGIScriptAlias / $workingPath/project/wsgi.py" >> /etc/apache2/sites-
 echo "    # socket.io conf" >> /etc/apache2/sites-enabled/$name.conf
 echo "    RewriteEngine On" >> /etc/apache2/sites-enabled/$name.conf
 echo "    RewriteCond %{REQUEST_URI}  ^/socket.io/1/websocket  [NC]" >> /etc/apache2/sites-enabled/$name.conf
-echo "    RewriteRule /(.*)           ws://localhost:$nodePort/$1 [P,L]" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteRule /(.*)           ws://localhost:$nodePort/\$1 [P,L]" >> /etc/apache2/sites-enabled/$name.conf
 echo "    ProxyPass        /socket.io http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
 echo "    ProxyPassReverse /socket.io http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
