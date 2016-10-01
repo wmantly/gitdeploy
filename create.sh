@@ -19,6 +19,7 @@ export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 NODE_ENV='staging'
 export NODE_ENV='staging'
+export NODEPORT=$nodePort
 
 git clone $sshURL .
 
