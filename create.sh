@@ -3,56 +3,37 @@
 name="$1"
 sshURL="$2"
 
-nodePort=`./random_port.py`
-
-
-mkdir /var/www/gitwrapper/$name
-chmod 777 /var/www/gitwrapper/$name
-cd /var/www/gitwrapper/$name
-
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
-
+mkdir /var/www/gitwrapper/$name
+cd /var/www/gitwrapper/$name
+chmod 777 .
 echo `pwd`
-echo '============='
+
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
 git clone $sshURL .
-git checkout prod
-git status
-echo "=================="
-
-
-
-# change https urls to ssh
-perl -pi -e 's/https:\/\/github.com\//git\@github.com:/g' .gitmodules
-git submodule sync
-echo "=================="
-./scripts/setup.sh
-git stash
+/usr/local/bin/virtualenv ./env
+source env/bin/activate
+pip install -r requirements.txt 
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
-# set up project from prod, load database
+git checkout prod
 
-
-./manage.py createcachetable
-./manage.py migrate
-./manage.py loaddata /var/www/django.json
+python manage.py createcachetable
+python3 manage.py migrate
+python3 manage.py loaddata /var/www/django.json
 
 git checkout $name
-# change https urls to ssh
-perl -pi -e 's/https:\/\/github.com\//git\@github.com:/g' .gitmodules
-git submodule sync
-./scripts/setup.sh 
-git stash
-# python3 manage.py collectstatic --noinput
-./manage.py migrate
+
+pip install -r requirements.txt 
+
+python3 manage.py collectstatic --noinput
+python3 manage.py migrate
 chmod 777 db.sqlite3
 
-
-# set up apache vhost
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
 echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
 echo "    Alias /static /var/www/gitwrapper/$name/staticfiles" >> /etc/apache2/sites-enabled/$name.conf

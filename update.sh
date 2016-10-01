@@ -2,22 +2,17 @@
 name="$1"
 sshURL="$2"
 
-# set up git to auth
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
-
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
-
 cd /var/www/gitwrapper/$name
+
+source env/bin/activate
+
 git stash
 git pull --force origin $name
-
-perl -pi -e 's/https:\/\/github.com\//ssh:\/\/git@github.com:/g' .gitmodules
-git submodule sync
-
-./scripts/setup.sh
-git stash
+pip install -r requirements.txt 
 
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
