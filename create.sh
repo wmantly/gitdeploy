@@ -2,6 +2,8 @@
 
 name="$1"
 sshURL="$2"
+nodePort = `./random_port.py`
+workingPath = /var/www/gitwrapper/$name
 
 echo "starting $sshURL on $name"
 
@@ -12,13 +14,11 @@ cd $workingPath
 chmod 777 .
 echo `pwd`
 
-workingPath = /var/www/gitwrapper/$name
-nodePort = `./node_rtc/random_port.py`
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
-NODE_ENV ='staging'
-export NODE_ENV ='staging'
+NODE_ENV='staging'
+export NODE_ENV='staging'
 
 git clone $sshURL .
 
@@ -27,8 +27,8 @@ git clone $sshURL .
 source env/bin/activate
 
 cp /var/www/local_settings.py project/settings/local_settings.py
-echo "BRANCH = '$name'" >> project/settings/local_settings.py
-echo "NODEPORT = '$name'" >> project/settings/local_settings.py
+echo "BRANCH='$name'" >> project/settings/local_settings.py
+echo "NODEPORT='$name'" >> project/settings/local_settings.py
 
 echo "checking out to prod for set up"
 git checkout prod
