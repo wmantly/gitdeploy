@@ -12,7 +12,8 @@ source env/bin/activate
 
 git stash
 git pull --force origin $name
-pip install -r requirements.txt 
+
+./scripts/setup.sh
 
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
