@@ -13,12 +13,12 @@ chmod 777 .
 echo `pwd`
 
 workingPath = /var/www/gitwrapper/$name
-nodePort = `./random_port.py`
+nodePort = `./node_rtc/random_port.py`
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
 
-NODE_ENV = 'staging'
-export NODE_ENV = 'staging'
+NODE_ENV ='staging'
+export NODE_ENV ='staging'
 
 git clone $sshURL .
 
