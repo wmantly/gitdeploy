@@ -3,6 +3,8 @@
 name="$1"
 sshURL="$2"
 
+echo "starting $sshURL on $name"
+
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 mkdir /var/www/gitwrapper/$name
@@ -17,15 +19,19 @@ git clone $sshURL .
 
 ./scripts/setup.sh
 
+source env/bin/activate
+
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH = '$name'" >> project/settings/local_settings.py
 
+echo "checking out to prod for set up"
 git checkout prod
 
-python manage.py createcachetable
+python3 manage.py createcachetable
 python3 manage.py migrate
 python3 manage.py loaddata /var/www/django.json
 
+echo "checking out to $name for set up"
 git checkout $name
 
 ./scripts/setup.sh 
@@ -33,6 +39,8 @@ git checkout $name
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
 chmod 777 db.sqlite3
+
+echo "creating apache VirtualHost file"
 
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
 echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
