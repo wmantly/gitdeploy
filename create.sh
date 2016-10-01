@@ -3,7 +3,7 @@
 name="$1"
 sshURL="$2"
 nodePort = `./random_port.py`
-workingPath = /var/www/gitwrapper/$name
+workingPath=/var/www/gitwrapper/$name
 
 echo "starting $sshURL on $name"
 
