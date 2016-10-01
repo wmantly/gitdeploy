@@ -2,7 +2,7 @@
 
 name="$1"
 sshURL="$2"
-nodePort = `./random_port.py`
+nodePort=`./random_port.py`
 workingPath=/var/www/gitwrapper/$name
 
 echo "starting $sshURL on $name"
@@ -47,7 +47,7 @@ python3 manage.py migrate
 chmod 777 db.sqlite3
 
 forever stop $workingPath/node_rtc/app.js
-echo "starting node add"
+echo "starting node app on port $nodePort"
 forever start $workingPath/node_rtc/app.js
 
 echo "creating apache VirtualHost file"
