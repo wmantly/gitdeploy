@@ -62,14 +62,17 @@ echo "    WSGIProcessGroup $name" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIScriptAlias / $workingPath/project/wsgi.py" >> /etc/apache2/sites-enabled/$name.conf
 echo "    # socket.io conf" >> /etc/apache2/sites-enabled/$name.conf
 
-echo "    RewriteEngine on" >> /etc/apache2/sites-enabled/$name.conf
+echo "    <Location '/socket.io'>" >> /etc/apache2/sites-enabled/$name.conf
+echo "        ProxyPass http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
+echo "        ProxyPassReverse http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
+echo "    </Location>" >> /etc/apache2/sites-enabled/$name.conf
 
-echo "    RewriteCond %{QUERY_STRING} transport=polling" >> /etc/apache2/sites-enabled/$name.conf
-echo "    RewriteRule /(.*)$ http://localhost:$nodePort/\$1 [P]" >> /etc/apache2/sites-enabled/$name.conf
-
-echo "    ProxyRequests off" >> /etc/apache2/sites-enabled/$name.conf
-echo "    ProxyPass /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
-echo "    ProxyPassReverse /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    RewriteEngine on" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    RewriteCond %{QUERY_STRING} transport=polling" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    RewriteRule /(.*)$ http://localhost:$nodePort/\$1 [P]" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyRequests off" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyPass /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyPassReverse /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
 
 # echo "    ProxyPreserveHost On" >> /etc/apache2/sites-enabled/$name.conf
 # echo "    # these next two lines are to enable the wstunnel" >> /etc/apache2/sites-enabled/$name.conf
