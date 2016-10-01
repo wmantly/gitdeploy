@@ -30,6 +30,7 @@ source env/bin/activate
 cp /var/www/local_settings.py project/settings/local_settings.py
 echo "BRANCH='$name'" >> project/settings/local_settings.py
 echo "NODEPORT='$name'" >> project/settings/local_settings.py
+echo $nodePort > env/nodePort
 
 echo "checking out to prod for set up"
 git checkout prod
