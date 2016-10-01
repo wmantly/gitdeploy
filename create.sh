@@ -59,10 +59,12 @@ echo "    Alias /static $workingPath/staticfiles" >> /etc/apache2/sites-enabled/
 echo "    WSGIDaemonProcess $name python-path=$workingPath:$workingPath/env:$workingPath/env/lib/python3.5/site-packages" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIProcessGroup $name" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIScriptAlias / $workingPath/project/wsgi.py" >> /etc/apache2/sites-enabled/$name.conf
-echo "    <Location '/socket.io'>" >> /etc/apache2/sites-enabled/$name.conf
-echo "        ProxyPass http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
-echo "        ProxyPassReverse http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
-echo "    </Location>" >> /etc/apache2/sites-enabled/$name.conf
+echo "    # socket.io conf" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteEngine On" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteCond %{REQUEST_URI}  ^/socket.io/1/websocket  [NC]" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteRule /(.*)           ws://localhost:$nodePort/$1 [P,L]" >> /etc/apache2/sites-enabled/$name.conf
+echo "    ProxyPass        /socket.io http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
+echo "    ProxyPassReverse /socket.io http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
 
 /usr/sbin/service apache2 restart
