@@ -65,6 +65,8 @@ echo "    # socket.io conf" >> /etc/apache2/sites-enabled/$name.conf
 echo "    <Location '/socket.io'>" >> /etc/apache2/sites-enabled/$name.conf
 echo "        ProxyPass http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
 echo "        ProxyPassReverse http://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
+echo "        ProxyPass ws://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
+echo "        ProxyPass wss://localhost:$nodePort/socket.io" >> /etc/apache2/sites-enabled/$name.conf
 echo "    </Location>" >> /etc/apache2/sites-enabled/$name.conf
 
 # echo "    RewriteEngine on" >> /etc/apache2/sites-enabled/$name.conf
