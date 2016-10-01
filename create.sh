@@ -62,14 +62,21 @@ echo "    WSGIProcessGroup $name" >> /etc/apache2/sites-enabled/$name.conf
 echo "    WSGIScriptAlias / $workingPath/project/wsgi.py" >> /etc/apache2/sites-enabled/$name.conf
 echo "    # socket.io conf" >> /etc/apache2/sites-enabled/$name.conf
 
-echo "    ProxyPreserveHost On" >> /etc/apache2/sites-enabled/$name.conf
-echo "    # these next two lines are to enable the wstunnel" >> /etc/apache2/sites-enabled/$name.conf
-echo "    ProxyPass /socket.io/1/websocket ws://localhost:$nodePort/socket.io/1/websocket" >> /etc/apache2/sites-enabled/$name.conf
-echo "    ProxyPassReverse /socket.io/1/websocket ws://localhost:$nodePort/socket.io/1/websocket" >> /etc/apache2/sites-enabled/$name.conf
-echo "    # this line is to retrieve the socket.io.js to use" >> /etc/apache2/sites-enabled/$name.conf
-echo "    ProxyPass /socket.io/ http://localhost:$nodePort/socket.io/" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteEngine on" >> /etc/apache2/sites-enabled/$name.conf
 
+echo "    RewriteCond %{QUERY_STRING} transport=polling" >> /etc/apache2/sites-enabled/$name.conf
+echo "    RewriteRule /(.*)$ http://localhost:$nodePort/\$1 [P]" >> /etc/apache2/sites-enabled/$name.conf
 
+echo "    ProxyRequests off" >> /etc/apache2/sites-enabled/$name.conf
+echo "    ProxyPass /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
+echo "    ProxyPassReverse /socket.io/ ws://localhost:$nodePort/\socket.io/" >> /etc/apache2/sites-enabled/$name.conf
+
+# echo "    ProxyPreserveHost On" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    # these next two lines are to enable the wstunnel" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyPass /socket.io/1/websocket ws://localhost:$nodePort/socket.io/1/websocket" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyPassReverse /socket.io/1/websocket ws://localhost:$nodePort/socket.io/1/websocket" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    # this line is to retrieve the socket.io.js to use" >> /etc/apache2/sites-enabled/$name.conf
+# echo "    ProxyPass /socket.io/ http://localhost:$nodePort/socket.io/" >> /etc/apache2/sites-enabled/$name.conf
 
 
 # echo "    RewriteEngine On" >> /etc/apache2/sites-enabled/$name.conf
