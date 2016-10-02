@@ -2,7 +2,7 @@
 
 name="$1"
 sshURL="$2"
-nodePort=`./random_port.py`
+nodePort=`python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'`
 workingPath=/var/www/gitwrapper/$name
 
 echo "starting $sshURL on $name"
