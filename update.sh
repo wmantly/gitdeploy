@@ -30,8 +30,8 @@ NODE_ENV='staging'
 export NODE_ENV='staging'
 nodePort=cat env/nodePort
 export NODEPORT=$nodePort
-forever stop $workingPath/node_rtc/app.js
-forever start $workingPath/node_rtc/app.js
+/usr/local/bin/forever stop $workingPath/node_rtc/app.js
+/usr/local/bin/forever start $workingPath/node_rtc/app.js
 
 /usr/sbin/service apache2 restart
 
