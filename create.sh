@@ -1,5 +1,5 @@
 #!/bin/bash
-
+PATH=PATH:/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 name="$1"
 sshURL="$2"
 nodePort=`python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'`
@@ -16,6 +16,7 @@ echo `pwd`
 
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
+export PATH=PATH
 
 NODE_ENV='staging'
 export NODE_ENV='staging'

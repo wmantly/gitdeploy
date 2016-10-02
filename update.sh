@@ -2,15 +2,15 @@
 name="$1"
 sshURL="$2"
 workingPath = /var/www/gitwrapper/$name
-
+PATH=PATH:/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
+cd $workingPath
 
 
 DJANGO_SETTINGS_MODULE=project.settings.prod
 export DJANGO_SETTINGS_MODULE=project.settings.prod
-cd $workingPath
-
+export PATH=PATH
 source env/bin/activate
 
 git stash
