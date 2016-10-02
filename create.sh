@@ -47,9 +47,9 @@ python3 manage.py collectstatic --noinput
 python3 manage.py migrate
 chmod 777 db.sqlite3
 
-/usr/local/bin/forever stop $workingPath/node_rtc/app.js
+forever stop $workingPath/node_rtc/app.js
 echo "starting node app on port $nodePort"
-/usr/local/bin/forever start $workingPath/node_rtc/app.js -l 
+forever start $workingPath/node_rtc/app.js -l 
 
 echo "creating apache VirtualHost file"
 
