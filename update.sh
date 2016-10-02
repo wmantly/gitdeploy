@@ -1,7 +1,7 @@
 #!/bin/bash
 name="$1"
 sshURL="$2"
-workingPath = /var/www/gitwrapper/$name
+workingPath=/var/www/gitwrapper/$name
 
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
