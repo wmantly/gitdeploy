@@ -2,7 +2,7 @@
 name="$1"
 sshURL="$2"
 workingPath = /var/www/gitwrapper/$name
-PATH=PATH:/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
 cd $workingPath
