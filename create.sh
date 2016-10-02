@@ -49,7 +49,7 @@ chmod 777 db.sqlite3
 
 forever stop $workingPath/node_rtc/app.js
 echo "starting node app on port $nodePort"
-forever start $workingPath/node_rtc/app.js -l 
+forever start $workingPath/node_rtc/app.js
 
 echo "creating apache VirtualHost file"
 
