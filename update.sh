@@ -29,6 +29,8 @@ NODE_ENV='staging'
 export NODE_ENV='staging'
 nodePort=`cat env/nodePort`
 export NODEPORT=$nodePort
+export djangoURL="http://$name.staging.bytedev.co"
+
 forever stop $workingPath/node_rtc/app.js
 forever start $workingPath/node_rtc/app.js
 
