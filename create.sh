@@ -47,6 +47,7 @@ git checkout $name
 python3 manage.py collectstatic --noinput
 python3 manage.py migrate
 chmod 777 db.sqlite3
+chmod 777 -R .track-storage
 
 forever stop $workingPath/node_rtc/app.js
 echo "starting node app on port $nodePort"
