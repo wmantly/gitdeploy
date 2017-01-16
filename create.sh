@@ -4,18 +4,6 @@ sshURL="$2"
 nodePort=`python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'`
 workingPath=/var/www/gitwrapper/$name
 
-
-echo "creating apache VirtualHost file"
-
-echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
-echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
-echo "    DocumentRoot $workingPath/static/error_pages" >> /etc/apache2/sites-enabled/$name.conf
-
-echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
-
-/usr/sbin/service apache2 reload
-
-
 echo "starting $sshURL on $name"
 
 eval "$(ssh-agent -s)"
@@ -34,6 +22,15 @@ export NODEPORT=$nodePort
 export djangoURL="http://$name.staging.bytedev.co"
 
 git clone $sshURL .
+
+echo "creating apache VirtualHost file and showing down"
+
+echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
+echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
+echo "    DocumentRoot $workingPath/static/error_pages" >> /etc/apache2/sites-enabled/$name.conf
+echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
+
+/usr/sbin/service apache2 reload
 
 ./scripts/setup.sh
 
