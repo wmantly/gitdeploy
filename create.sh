@@ -4,6 +4,18 @@ sshURL="$2"
 nodePort=`python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'`
 workingPath=/var/www/gitwrapper/$name
 
+
+echo "creating apache VirtualHost file"
+
+echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$name.conf
+echo "    ServerName $name.staging.bytedev.co" >> /etc/apache2/sites-enabled/$name.conf
+echo "    DocumentRoot $workingPath/static/error_pages" >> /etc/apache2/sites-enabled/$name.conf
+
+echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
+
+/usr/sbin/service apache2 reload
+
+
 echo "starting $sshURL on $name"
 
 eval "$(ssh-agent -s)"
@@ -74,6 +86,6 @@ echo "    ProxyPassReverse /socket.io http://localhost:$nodePort/socket.io" >> /
 
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$name.conf
 
-/usr/sbin/service apache2 restart
+/usr/sbin/service apache2 reload
 
 exit 0
