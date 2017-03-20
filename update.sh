@@ -1,11 +1,11 @@
 #!/bin/bash
 name="$1"
 sshURL="$2"
-workingPath=/var/www/gitwrapper/$name
+install_dir="$3"
 
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_github_rsa
-cd $workingPath
+cd $install_dir
 
 
 DJANGO_SETTINGS_MODULE=project.settings.prod
@@ -31,8 +31,8 @@ nodePort=`cat env/nodePort`
 export NODEPORT=$nodePort
 export djangoURL="http://$name.staging.bytedev.co"
 
-forever stop $workingPath/node_rtc/app.js
-forever start $workingPath/node_rtc/app.js
+forever stop $install_dir/node_rtc/app.js
+forever start $install_dir/node_rtc/app.js
 
 /usr/sbin/service apache2 restart
 
