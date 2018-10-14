@@ -63,7 +63,7 @@ router.all('/', function(req, res, next) {
 	var call = (req.body.created && 'create') || 
 		(req.body.deleted && 'delete') || 
 		'update';
-	console.log('body');
+	console.log(body);
 
 	var branch = req.body.ref.replace('refs/heads/', '');
 	var sshURL = req.body.repository.ssh_url;
