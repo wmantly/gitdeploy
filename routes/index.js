@@ -63,12 +63,14 @@ router.all('/', function(req, res, next) {
 	var call = (req.body.created && 'create') || 
 		(req.body.deleted && 'delete') || 
 		'update';
+	console.log('body');
 
 	var branch = req.body.ref.replace('refs/heads/', '');
 	var sshURL = req.body.repository.ssh_url;
-	if(call === 'update' && !fs.existsSync('/var/www/gitwrapper/'+name)) call = 'create';
 
-	console.log('body');
+	console.log('branch', branch, 'sshURL', sshURL)
+	// if(call === 'update' && !fs.existsSync('/var/wres.locals.messageww/gitwrapper/'+name)) call = 'create';
+
 
 	// return calls[call](req, res, branch, sshURL);
 });
